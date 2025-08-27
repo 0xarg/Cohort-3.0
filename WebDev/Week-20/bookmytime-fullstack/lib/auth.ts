@@ -2,6 +2,7 @@ import prisma from "@/db";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import  CredentialsProvider from "next-auth/providers/credentials"
 import Google from "next-auth/providers/google";
+import bcrypt from "bcrypt"
 
 
 export const authOptions = {
@@ -18,20 +19,10 @@ export const authOptions = {
           where: {
             email: credentials?.email,
           },
-          select: {
-            password: true,
-            id: true,
-            name: true,
-            email: true,
-          },
         });
 
-        if (userDb && userDb.password) {
-          return {
-            id: userDb.id,
-            name: userDb.name,
-            email: userDb.email,
-          };
+        if (userDb && userDb.password && await bcrypt.compare(credentials.password, userDb.password)) {
+          return userDb
         } else {
           return null;
         }
@@ -45,4 +36,7 @@ export const authOptions = {
   pages: {
     signIn: "/signin",
   },
+  session:{
+    strategy:"jwt"
+  }
 };

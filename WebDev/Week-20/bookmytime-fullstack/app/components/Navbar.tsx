@@ -13,6 +13,7 @@ export function NavBar() {
       <span className="font-bold text-xl shadow-lg text-neutral-200">
         {session.status !== "authenticated" ? (
           <div>
+            {/* {JSON.stringify(session)} */}
             BookMyTime
 
           </div>

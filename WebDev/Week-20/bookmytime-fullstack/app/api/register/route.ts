@@ -1,24 +1,44 @@
-import { prisma } from "@/prisma/prisma";
+import prisma from "@/db";
+import { log } from "console";
+import { z } from "zod";
+import bcrypt from "bcrypt";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req:NextRequest) {
-    const data = await req.json()
-    let user;
-    try {
-        user = await prisma.user.create({
-        data: {
-          name: data.name,
-          password: data.password,
-          email: data.email,
-        },
-      });  
+export async function POST(req: NextRequest) {
+  const data = await req.json();
+  const reqBody = z.object({
+    email: z.email(),
+    name: z.string().min(3).max(20),
+    password: z.string().min(3).max(20)
+  })
 
-      return NextResponse.json({
-        message:"registered"
-      })    
-    } catch (error) {
-      return NextResponse.json({
-        message:error
-      }, {status:400}, )
-    }
-    }
+  const SafeData = reqBody.safeParse(data);
+  log(SafeData)
+
+  if (!SafeData.success){
+    return NextResponse.json({
+      message:SafeData.error.issues[0].message
+    }, {status:500})
+  }
+
+  const hashedPassword = await bcrypt.hash(data.password,10)
+  try {
+    await prisma.user.create({
+      data: {
+        name: data.name,
+        email: data.email,
+        password: hashedPassword,
+      },
+    });
+    return NextResponse.json({
+      message: "User registered Succesfully !",
+    });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: error,
+      },
+      { status: 400 }
+    );
+  }
+}

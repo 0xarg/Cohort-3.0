@@ -51,16 +51,24 @@ export default function Register() {
                 });
                 if (res.status === 200) {
                   alert("User created successfully !");
+                  router.push("/api/auth/signin")
+                }else{
+                  alert(res)
                 }
-                router.push("/api/auth/signin")
               } catch (error: any) {
                 if (error.response && error.response.status === 400) {
                   alert(
                     "User Already Exists, Try again with Different Credentials"
                   );
-                }else{
-                  alert("Something went wrong!, " + error)
                 }
+                if(error.response && error.response.status === 500){
+                  alert(error.response.data.message)
+                }
+                else{
+                  alert("Something went wrong")
+                }
+
+                
               }
             }}
             name="Submit"
