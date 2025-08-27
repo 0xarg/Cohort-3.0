@@ -1,6 +1,5 @@
 "use client";
 
-import axios from "axios";
 import { useRef } from "react";
 import { NavBar } from "../components/Navbar";
 import { Input } from "../components/Input";
@@ -8,12 +7,10 @@ import { Button } from "../components/Button";
 import { redirect, useRouter } from "next/navigation";
 import { signIn, signOut } from "next-auth/react";
 import { FaGoogle } from "react-icons/fa6";
-import Google from "next-auth/providers/google";
 
 export default function Signin() {
   const passRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
 
   return (
     <div className="text-white flex flex-col h-screen ">

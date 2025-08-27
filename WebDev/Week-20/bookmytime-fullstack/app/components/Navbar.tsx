@@ -6,17 +6,19 @@ import { Button } from "./Button";
 
 export function NavBar() {
   const session = useSession();
-  console.log();
-  
+
 
   return (
     <div className="outline-1 outline-neutral-500 shadow-lg p-5 items-center  rounded-3xl  hover:bg-neutral-950 flex justify-around text-white ">
       <span className="font-bold text-xl shadow-lg text-neutral-200">
         {session.status !== "authenticated" ? (
-          "BookMyTime"
+          <div>
+            BookMyTime
+
+          </div>
         ) : (
           <>
-          <img src={session.data?.user?.image ?? ""} alt="UserImage" />
+          <img src={session.data?.user?.image ?? undefined} alt="ok" />
           {session.data?.user?.name}
           </>
         )}
