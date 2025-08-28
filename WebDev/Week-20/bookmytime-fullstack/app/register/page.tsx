@@ -21,37 +21,34 @@ export default function Register() {
         <div className="outline-1 outline-neutral-400 rounded-xl min-w-90 flex flex-col items-center p-10 justify-around gap-10">
           <div className="text-xl text-neutral-200">Sign Up</div>
           <div className="flex flex-col gap-4 text-neutral-200">
-            <Input
+            {/* <Input
               placeholder="JohnDoe"
               type="text"
               label="Username"
               ref={nameRef}
-            />
+            /> */}
             <Input
               placeholder="johndoe.com"
               type="text"
               label="Email"
               ref={emailRef}
             />
-            <Input
+            {/* <Input
               placeholder="Secure"
               type="password"
               label="Password"
               ref={passRef}
-            />
+            /> */}
           </div>
           <Button
             onClick={async () => {
               let res;
               try {
-                res = await axios.post("http://localhost:3000/api/register", {
-                  name: nameRef.current?.value,
+                res = await axios.post("http://localhost:3000/api/verifyEmail", {
                   email: emailRef.current?.value,
-                  password: passRef.current?.value,
                 });
-                if (res.status === 200) {
-                  alert("User created successfully !");
-                  router.push("/api/auth/signin")
+                if (res.status === 201) {
+                  alert(`A mail has been to sent to the ${emailRef.current?.value}, Please check for further steps.   !`);
                 }else{
                   alert(res)
                 }
@@ -71,7 +68,7 @@ export default function Register() {
                 
               }
             }}
-            name="Submit"
+            name="Sign Up with Email"
           />
         </div>
       </div>

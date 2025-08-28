@@ -3,10 +3,11 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import  CredentialsProvider from "next-auth/providers/credentials"
 import Google from "next-auth/providers/google";
 import bcrypt from "bcrypt"
+import Email from "next-auth/providers/email";
 
 
 export const authOptions = {
-  adapter: PrismaAdapter(prisma),
+  // adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -28,15 +29,28 @@ export const authOptions = {
         }
       },
     }),
+    // Email({
+    //   server: {
+    //     host: process.env.EMAIL_SERVER_HOST,
+    //     port: process.env.EMAIL_SERVER_PORT,
+    //     auth: {
+    //       user: process.env.EMAIL_SERVER_USER,
+    //       pass: process.env.EMAIL_SERVER_PASSWORD
+    //     },
+    //   },
+    //   from: process.env.EMAIL_FROM,
+    // }),
     Google({
       clientId: process.env.AUTH_GOOGLE_ID ?? "",
-      clientSecret: process.env.AUTH_GOOGLE_SECRET ?? ""
+      clientSecret: process.env.AUTH_GOOGLE_SECRET ?? "",
     }),
   ],
+
   pages: {
     signIn: "/signin",
+    // verifyRequest:"/"
   },
-  session:{
-    strategy:"jwt"
-  }
+  // session: {
+  //   strategy: "database",
+  // },
 };

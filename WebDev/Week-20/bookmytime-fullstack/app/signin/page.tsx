@@ -56,7 +56,7 @@ export default function Signin() {
             name="Submit"
           />
           <div>
-          <Button name="Sign In with Google" icon={<FaGoogle />} onClick={()=>{signIn("google",{ redirect:true,callbackUrl:"/dashboard"})}} />
+          <Button name="Sign In with Google" icon={<FaGoogle />} onClick={()=>{signIn("email",{ redirect:true,callbackUrl:"/dashboard"})}} />
           </div>
         </div>
       </div>
