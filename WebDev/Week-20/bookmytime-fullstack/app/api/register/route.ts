@@ -30,9 +30,15 @@ export async function POST(req: NextRequest) {
         password: hashedPassword,
       },
     });
+
+    await prisma.verificationToken.delete({
+      where:{
+        identifier: data.email
+      }
+    })
     return NextResponse.json({
       message: "User registered Succesfully !",
-    });
+    }, {status:201});
   } catch (error) {
     return NextResponse.json(
       {

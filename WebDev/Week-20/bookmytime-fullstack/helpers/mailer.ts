@@ -1,9 +1,4 @@
-import { Email } from "@/app/api/mail/Email";
-import bcrypt from "bcrypt";
-import { NextResponse } from "next/server";
-import { Resend } from "resend";
 import nodemailer from "nodemailer";
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 interface mailProps {
   email: string;
