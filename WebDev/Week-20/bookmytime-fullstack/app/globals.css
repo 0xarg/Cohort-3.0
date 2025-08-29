@@ -1,8 +1,8 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
   background-color: black;
   margin: 40px;
   color: white;

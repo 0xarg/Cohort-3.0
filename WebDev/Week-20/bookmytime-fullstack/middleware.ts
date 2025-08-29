@@ -6,7 +6,7 @@ export { default } from "next-auth/middleware"
 export function middleware(req: NextRequest){
  
     const path = req.nextUrl.pathname;
-    const isPublicPath = path === '/signin' || path === '/signup';
+    const isPublicPath = path === '/signin' || path === '/signup' || path === '/' || path === '/register' || path === '/api/verifyEmail';
 
     const token = req.cookies.get("next-auth.session-token")?.value || "";
     if (isPublicPath && token ){
@@ -25,5 +25,8 @@ export const config = {
     '/signin',
     "/signup",
     "/dashboard",
+    "/",
+    "/api/verifyEmail",
+    "/register"
   ],
 };

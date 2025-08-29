@@ -10,20 +10,21 @@ try {
             token
         },
         select:{
-            identifier: true
+            identifier: true,
+            expires: true
         }
     });
-
-    if (!tokenDb){
+    const currentTime = new Date (Date.now());
+    if (!tokenDb || !tokenDb.expires || currentTime > tokenDb.expires){
         return NextResponse.json({
             message: "token expired or invalid"
         }, {status: 401})
     }
-    // await prisma.verificationToken.delete({
-    //     where:{
-    //         identifier: tokenDb.identifier
-    //     }
-    // })
+
+
+
+
+
     return NextResponse.json({
         message: "Token Verified!",
         email: tokenDb.identifier
