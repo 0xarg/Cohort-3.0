@@ -7,8 +7,22 @@ import { title } from "process";
 import { IoClose } from "react-icons/io5";
 import { Input } from "../components/Input";
 import { get } from "http";
+import { useSession } from "next-auth/react";
 
 export default function () {
+
+
+
+  type Booking = {
+    userId?: string
+    user?: {
+      email?: string;
+      id?: string;
+      // add other user properties if needed
+    };
+    // add other booking properties if needed
+  };
+
   type Event = {
     id: string;
     title: string;
@@ -16,7 +30,7 @@ export default function () {
     location: string;
     description: string;
     creator: any;
-    bookings: [];
+    bookings: Booking[];
   };
 
   const [events, setEvents] = useState<Event[]>([]);
@@ -26,10 +40,14 @@ export default function () {
   const descriptionRef = useRef<HTMLInputElement>(null);
   const locationRef = useRef<HTMLInputElement>(null);
   const dateRef = useRef<HTMLInputElement>(null);
-
+  const session = useSession();
   async function getEvents() {
     try {
-      const res = await axios.get("http://localhost:3000/api/events");
+      const res = await axios.get("http://localhost:3000/api/events/all");
+      const myEmail = res.data.email;
+
+      const events = res.data.events
+      
       setEvents(res.data.events);
     } catch (error) {
       console.log(error);
@@ -53,7 +71,7 @@ export default function () {
 
   return (
     <div className="h-screen relative">
-      <NavBar home={false}
+      <NavBar home={true}
         onEventAdded={(newEvent) => {
           setEvents((prev) => [...prev, newEvent]);
         }}
@@ -126,15 +144,18 @@ export default function () {
             <Button
               name="Edit Event"
               onClick={async () => {
-                const date = dateRef.current?.value || editEvent?.date
+                const date = dateRef.current?.value || editEvent?.date;
                 try {
-                  const res = await axios.put("http://localhost:3000/api/events", {
-                    id: editEvent?.id,
-                    title: titleRef.current?.value,
-                    description: descriptionRef.current?.value,
-                    date: date,
-                    location: locationRef.current?.value,
-                  });
+                  const res = await axios.put(
+                    "http://localhost:3000/api/events",
+                    {
+                      id: editEvent?.id,
+                      title: titleRef.current?.value,
+                      description: descriptionRef.current?.value,
+                      date: date,
+                      location: locationRef.current?.value,
+                    }
+                  );
                   await getEvents();
                   setDialog(false);
                 } catch (error) {
@@ -151,7 +172,7 @@ export default function () {
       )}
 
       <div className="my-10  p-10 grid grid-cols-4 gap-13">
-        {events.map((event) => (
+        {events.filter(event => event.creator.email !== session.data?.user?.email).map(event => (
           <div
             key={event.id}
             className="border-1 min-w-70 min-h-70 px-5 py-2 rounded-2xl flex flex-col"
@@ -175,21 +196,24 @@ export default function () {
               {event.description}
             </div>
             <div className=" flex justify-center gap-5">
-              <Button
-                name="Edit Event"
-                onClick={async () => {
-                  setEditEvent(event);
-                  setDialog(true);
-                }}
-              />
-              <Button name="Delete Event" onClick={async()=>{
-                await axios.delete("http://localhost:3000/api/events",{
-                    data:{
-                        eventId: event.id
-                    }
-                })
-                await getEvents();
-              }} />
+                {event.bookings.some(booked=> booked.userId === event.creator.id) ? <Button name="Booked" extraStyle="bg-green-600 border-black" disabled={true} /> :
+                
+                <Button
+                  name="Book Event"
+                  onClick={async () => {
+                    await axios.post("http://localhost:3000/api/events/book", {
+                        event: event,
+                        creator: event.creator
+  
+                    });
+                    await getEvents();
+                  }}
+                />
+                
+                
+                }
+
+            
             </div>
           </div>
         ))}

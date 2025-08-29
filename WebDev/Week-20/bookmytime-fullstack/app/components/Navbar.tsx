@@ -10,9 +10,13 @@ import { Input } from "./Input";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
+interface NavBarProps{
+  onEventAdded?: (event: any) => void
+  home: boolean
+}
 
-
-export function NavBar({ onEventAdded }: { onEventAdded?: (event: any) => void }) {
+export function NavBar({ onEventAdded, home }:NavBarProps) {
+  console.log(home)
   const session = useSession();
   const [addEventDialog, setDialog] = useState(false);
   const router = useRouter();
@@ -64,8 +68,9 @@ export function NavBar({ onEventAdded }: { onEventAdded?: (event: any) => void }
             </div>
           </div>
           <div className="flex justify-center my-5">
-            <Button
-              name="Add Event"
+      
+          <Button
+              name="Add"
               onClick={async () => {
                 try {
                   await axios
@@ -116,7 +121,16 @@ export function NavBar({ onEventAdded }: { onEventAdded?: (event: any) => void }
             <div>
               {session.status === "authenticated" ? (
                 <div className="flex gap-6">
-                  <Button name="Add event" onClick={() => setDialog(true)} />
+                  {home === true ?
+                  <Button name="Dashboard" onClick={() => router.push('/dashboard')} />
+                   :
+                  <div className="flex gap-4">
+                    <Button name="Home" onClick={() => router.push('/home')} />
+                    <Button name="Add event" onClick={() => setDialog(true)} />
+
+                  </div>
+                  
+                  }
                   <button
                     className="border-1 py-2 px-3 rounded-lg hover:bg-white hover:text-black font-[550] hover:shadow-lg duration-300 cursor-pointer"
                     onClick={() => {
