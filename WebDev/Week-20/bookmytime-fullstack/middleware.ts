@@ -27,6 +27,7 @@ export const config = {
     "/dashboard",
     "/",
     "/api/verifyEmail",
-    "/register"
+    "/register",
+    '/home'
   ],
 };

@@ -1,0 +1,26 @@
+{
+  "name": "week-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -b",
+    "start": "node ./dist/index.js",
+    "dev": "pnpm run build && pnpm run start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@noble/ed25519": "^3.0.0",
+    "@types/bs58": "^5.0.0",
+    "bip39": "^3.1.0",
+    "bs58": "^6.0.0",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@types/bip39": "^3.0.4"
+  }
+}

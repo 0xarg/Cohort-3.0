@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 
 interface NavBarProps{
   onEventAdded?: (event: any) => void
-  home: boolean
+  home?: boolean
 }
 
 export function NavBar({ onEventAdded, home }:NavBarProps) {

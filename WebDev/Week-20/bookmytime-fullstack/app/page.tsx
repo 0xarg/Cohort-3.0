@@ -6,7 +6,7 @@ import { NavBar } from "./components/Navbar";
 export default async function Home(){
   return (
     <div className="text-white   flex flex-col gap-20">
-      <NavBar />
+      <NavBar home={false} />
       <div className="  min-h-96 flex  justify-around items-center gap-50 ">
 <div className="flex flex-col">
   <span className="text-3xl">

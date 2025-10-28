@@ -1,7 +1,6 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { NavBar } from "../components/Navbar";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import axios from "axios";
@@ -9,7 +8,6 @@ import axios from "axios";
 export default function () {
   const nameRef = useRef<HTMLInputElement>(null);
   const passRef = useRef<HTMLInputElement>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
 
   const [verified, setVerified] = useState(false);
   const [status, setStatus] = useState("Verifying....");
@@ -60,7 +58,6 @@ export default function () {
 
   return (
     <div className="text-white flex flex-col h-screen ">
-      {/* <NavBar /> */}
 
       <div className=" flex  h-lvh justify-center items-center">
         {verified === true ? (
