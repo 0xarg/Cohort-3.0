@@ -8,3 +8,7 @@ app.get('/',(req,res)=>{
 
 
 app.listen(3000);
+
+console.log("ENV Variable");
+
+console.log(process.env.DATABASE_URL);
