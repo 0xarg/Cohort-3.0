@@ -1,9 +1,10 @@
-import { useConnect, useConnectors } from "wagmi";
+import { useBalance, useConnect, useConnection, useConnectors } from "wagmi";
 
 export function WalletOptions({ children }: { children: React.ReactNode }) {
   const connect = useConnect();
+  const connection = useConnection();
   const connectors = useConnectors();
-
+  const balance = useBalance({ address: connection.address });
   return (
     <>
       {connectors.map((connector) => (
@@ -15,7 +16,9 @@ export function WalletOptions({ children }: { children: React.ReactNode }) {
           {connector.name}
         </button>
       ))}
-
+      {connection.address}
+      <br />
+      {balance.data?.value}
       {children}
     </>
   );

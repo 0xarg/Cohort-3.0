@@ -4,7 +4,7 @@ import { metaMask } from "wagmi/connectors";
 
 export const config = createConfig({
   chains: [mainnet],
-  connectors: [injected()],
+  connectors: [injected(), metaMask()],
   transports: {
     [mainnet.id]: http(),
   },
