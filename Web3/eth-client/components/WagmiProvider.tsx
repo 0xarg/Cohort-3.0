@@ -1,20 +1,12 @@
-"use client";
 import { config } from "@/lib/config";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
-import { WalletOptions } from "./WalletOptions";
 
 function page() {
   const client = new QueryClient();
   return (
     <WagmiProvider config={config}>
-      <QueryClientProvider client={client}>
-        <div className="flex justify-center items-center h-screen w-full">
-          <WalletOptions>
-            <></>
-          </WalletOptions>
-        </div>
-      </QueryClientProvider>
+      <QueryClientProvider client={client}>Hi there</QueryClientProvider>
     </WagmiProvider>
   );
 }
