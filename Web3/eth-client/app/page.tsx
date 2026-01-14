@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
 import { WalletOptions } from "./WalletOptions";
 import TotalSupply from "@/components/TotalSupply";
+import AllowUSDT from "@/components/AllowUSDT";
 
 function page() {
   const client = new QueryClient();
@@ -16,6 +17,7 @@ function page() {
           </WalletOptions>
           <div>
             <TotalSupply />
+            <AllowUSDT />
           </div>
         </div>
       </QueryClientProvider>
