@@ -10,5 +10,6 @@ export async function GET() {
   return NextResponse.json({
     privatekey: child.privateKey,
     publicKey: child.publicKey,
+    address: child.address,
   });
 }
