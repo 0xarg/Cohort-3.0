@@ -1,21 +1,19 @@
-use std::fs;
+fn main() {
+    let mut vec = Vec::new();
+    vec.push(1);
+    vec.push(2);
+    vec.push(3);
+    vec.push(4);
 
-enum Result<A, B> {
-    Ok(A),
-    Err(B),
+    println!("{:?}", even(vec));
 }
 
-fn main() {
-    let res = fs::read_to_string("example.txt");
-
-    // match res {
-    //     Ok(content) => {
-    //         println!("File content: {}", content);
-    //     }
-    //     Err(err) => {
-    //         println!("Error {}", err);
-    //     }
-    // }
-    println!("{}", res);
-    println!("Hey!")
+fn even(vec: Vec<i32>) -> Vec<i32> {
+    let mut new_vec = Vec::new();
+    for val in vec {
+        if val % 2 == 0 {
+            new_vec.push(val);
+        }
+    }
+    return new_vec;
 }
